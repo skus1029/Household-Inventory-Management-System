@@ -26,7 +26,7 @@
 
 
 ## 2. System context diagram
-![HIMS System Context Diagram](./diagram.png)
+![HIMS System Context Diagram](./diagram.PNG)
 
 
 ## 3. Use case list
