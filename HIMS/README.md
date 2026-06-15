@@ -10,4 +10,4 @@
 ---
 
 아래의 배포된 URL에 접속해 주세요.
-👉 **접속 링크: https://jovial-cat-d1ff53.netlify.app** (여기에 본인이 만든 링크 넣기)
+👉 **접속 링크: https://jovial-cat-d1ff53.netlify.app**
