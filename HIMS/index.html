@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>HIMS · 자취 살림 재고 관리</title>
+    <meta
+      name="description"
+      content="1인 가구를 위한 가계 자산 및 생필품 재고 관리 시스템"
+    />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendard-dynamic-subset.min.css"
+    />
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <!-- 로그인/회원가입 화면 -->
+    <div id="auth-view" class="auth-view"></div>
+
+    <!-- 메인 앱 (로그인 후 표시) -->
+    <div id="app-view" class="hidden"></div>
+
+    <!-- 모달 컨테이너 -->
+    <div id="modal-root"></div>
+
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

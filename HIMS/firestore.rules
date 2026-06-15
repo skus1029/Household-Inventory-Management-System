@@ -1,0 +1,56 @@
+rules_version = '2';
+
+// ============================================================
+//  HIMS Firestore 보안 규칙
+//  - 비기능 요구사항: UID 기준으로 사용자 데이터를 철저히 격리
+//  - categories / promotions 는 관리자(ADMIN)만 작성 가능
+//  Firebase Console > Firestore Database > 규칙(Rules) 탭에 붙여넣고 게시하세요.
+// ============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 요청자가 관리자인지 확인 (users/{uid}.role == 'ADMIN')
+    function isAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'ADMIN';
+    }
+
+    // 사용자 프로필: 본인만 읽기/쓰기
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // 재고: 로그인 상태 + 본인(ownerUid) 데이터만
+    match /items/{itemId} {
+      allow read, delete: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid;
+      allow create: if request.auth != null
+        && request.resource.data.ownerUid == request.auth.uid;
+      allow update: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerUid == request.auth.uid;
+    }
+
+    // 소비 로그: 본인 데이터만
+    match /consumptionLogs/{logId} {
+      allow read, delete: if request.auth != null
+        && resource.data.ownerUid == request.auth.uid;
+      allow create: if request.auth != null
+        && request.resource.data.ownerUid == request.auth.uid;
+    }
+
+    // 표준 카테고리: 로그인 사용자는 읽기, 관리자만 쓰기
+    match /categories/{categoryId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    // 할인/공동구매 정보: 로그인 사용자는 읽기, 관리자만 쓰기
+    match /promotions/{promoId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+  }
+}
