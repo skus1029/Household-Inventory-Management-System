@@ -1,12 +1,5 @@
 rules_version = '2';
 
-// ============================================================
-//  HIMS Firestore 보안 규칙
-//  - 비기능 요구사항: UID 기준으로 사용자 데이터를 철저히 격리
-//  - categories / promotions 는 관리자(ADMIN)만 작성 가능
-//  Firebase Console > Firestore Database > 규칙(Rules) 탭에 붙여넣고 게시하세요.
-// ============================================================
-
 service cloud.firestore {
   match /databases/{database}/documents {
 
